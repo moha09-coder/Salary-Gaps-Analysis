@@ -1,4 +1,4 @@
-#set text(size:14pt)
+#set text(size:12pt)
 #show link: underline
 
 #let title-page(title:[], names_ids:array, body) = {
@@ -35,7 +35,7 @@
   title: [A Study on the Gender \ Pay Gap in Egypt's Tech Market],
   names_ids: ("Mohamed Elmosalamy 23-101283", 
               "Omar Mohammad 23-101288",
-              "Omar Hesahm 23-101302",
+              "Omar Hesham 23-101302",
               "Mohamed Kotb 24-101222"),
   body
 )
@@ -129,17 +129,8 @@ For this complicated hypothesis test, we used #link("https://en.wikipedia.org/wi
 • Step 4: We ran separate regressions for the two groups and applied the Blinder–Oaxaca decomposition using the `statsmodels`. This allowed us to break down the mean outcome gap into an explained component and an unexplained component.
 
 • Step 5: We interpreted the decomposition output by examining the coefficients, p-values, and contribution of each variable. We assessed whether the overall gap, explained portion, or unexplained portion were statistically significant and derived conclusions about which factors contributed to inequality and how much remained unexplained.
-= Conclusion
 
-== Difference in mean salaries
-
-*TODO OMAR* -> Insert 
-
-== Controlled difference in mean salaries
-
-*TODO OMAR* -> Insert 
-
-== The Cost of Being a Woman
+== Cost of Being a woman
 
 We can define the cost of begin a woman as following
 
@@ -158,8 +149,25 @@ We used a multiple regression model to predict each woman's expected salary. Thi
 The idea behind this is to have the explanatory variables all the columns in the dataset except for `gender` and train this model solely on men data. Therefore, this model treats the entire workforce as men. The trained model is applied to the female workforce to find their expected salary based on objective factors. 
 
 Now, we use the current salary given in the dataset, and use this distribution to create a confidence interval.
+= Conclusion
 
-*TODO OMAR* -> _Show CI image here_
+== Difference in mean salaries
+
+*TODO OMAR* -> 
+
+
+== Controlled difference in mean salaries
+
+*TODO OMAR* -> Insert 
+
+== The Cost of Being a Woman
+
+The resultant confidence interval is the following:
+#image("cost_of_being_a_woman_CI.png")
+
+We are 95% confident that the _cost of being a woman_ lies between -1950.41 and 1590.81.
+
+we can reach an important conclusion: the value *0* is included in the 95% interval, showing that that 0 is a possible estimate for the cost of being a woman, indicating that the cost might be zero.
 
 = Any potential issues
 
