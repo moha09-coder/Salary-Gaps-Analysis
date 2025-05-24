@@ -152,12 +152,18 @@ We used a multiple regression model to predict each woman's expected salary. Thi
 The idea behind this is to have the explanatory variables all the columns in the dataset except for `gender` and train this model solely on men data. Therefore, this model treats the entire workforce as men. The trained model is applied to the female workforce to find their expected salary based on objective factors. 
 
 Now, we use the current salary given in the dataset, and use this distribution to create a confidence interval.
+
 = Conclusion
 
 == Difference in mean salaries
 
+*P-value*: 0.2668
+The result is far greater the significance level $0.05$, so we fail to reject the null hypothesis: There is no significant evidence of a pay gap between men and women.
 
-The result of the salary comparison by experience bracket and gender:
+== Controlled difference in mean salaries
+
+After controlling for years of experience, the resultant data was used to generate the following graph
+
 #image("salaries_differences_across_years_of_expereinces.png")
 
 Key observations:
@@ -166,10 +172,6 @@ Key observations:
 + In the first two years, the average salary is around 18000 for both genders
 + In the first 10 years, men appear to have higher average salaries, small at the first two years, and increases as time goes on
 + After the first 10 years, women have far higher salaries them men in the tech industry. After 15+ years, women have 12000 EGP more than men on average.
-
-== Controlled difference in mean salaries
-
-*TODO OMAR* -> Insert 
 
 == The Cost of Being a Woman
 
