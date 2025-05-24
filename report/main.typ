@@ -1,36 +1,154 @@
 #set text(size:14pt)
+#show link: underline
+
+#let title-page(title:[], names_ids:array, body) = {
+  set page(margin: (top: 1.5in, rest: 2in))
+  set text(font: "Source Sans Pro", size: 14pt)
+  set heading(numbering: "1.1.1")
+  line(start: (0%, 0%), end: (8.5in, 0%), stroke: (thickness: 2pt))
+  align(top + right)[
+    #image("EUI Logo.png", width: 12em)
+    Egypt University of Informatics \
+    Computing and Information Sciences \
+    Data Analysis Course
+  ]
+  
+  align(horizon + left)[
+    #text(size: 24pt, title) \
+    #v(2em)
+    Supervised by: \
+    #h(1em) Dr. Mohamed Taher Alrefaie
+    #v(1em)
+    Submitted by: \
+    #h(1em)#names_ids.join("\n     ")
+  ]
+  
+  align(bottom + left)[2025-05-24]
+  pagebreak()
+  set page(fill: none, margin: auto)
+  align(horizon, outline(indent: auto))
+  pagebreak()
+  body
+}
+
+#show: body => title-page(
+  title: [A Study on the Gender \ Pay Gap in Egypt's Tech Market],
+  names_ids: ("Mohamed Elmosalamy 23-101283", 
+              "Omar Mohammad 23-101288",
+              "Omar Hesahm 23-101302",
+              "Mohamed Kotb 24-101222"),
+  body
+)
+
+
 
 = Abstract
 The gender pay gap remains a contentious and highly debated issue worldwide. This analysis investigates whether women earn less than their peers in *Egypt's tech industry*. 
 
 The study aims to quantify salary differences between genders using publicly available data, offering insights into whether a significant gender-based wage gap exists.
 = Introduction
-The gender pay gap has been a global issue across labor markets. While considerable research has been done in western counteries, limited data-driven analysis exists in the Middle East. In Egypt This remains an unstudied topic. 
+The gender pay gap has been a global issue across labor markets. While considerable research has been done in wester countries, limited data-driven analysis exists in the Middle East. In Egypt This remains an unstudied topic. 
 
 To reason about this, we had to define 3 methods to attack this problem.
 
-_Describe 1st hypothesis here_
+*TODO OMAR* -> _Describe 1st hypothesis here_
 
-_Describe 2st hypothesis here_
+*TODO OMAR* -> _Describe 2st hypothesis here_
 
 Third, we define *The Cost of Being a Woman* as the amount of disparity between salaries that a women loses (or potentially earns) compared to men per month. It's the amount a man with her skills, title, and years of experience would be expected to earn. The analysis aims to provide a confidence interval with $alpha=95%$ to find this cost.
 
+= Research Questions
++ Is there a statistically significant difference in mean salaries between genders?
++ After controlling for years of experience, and other contributing factors, does the pay gap persist/vanish?
++ What is the cost of being a woman?, in other words, how much does a woman lose/gain in a month in comparison to a man with the same qualifications?
 
-= Description of the dataset
-[Moha does this]
-= Methods
-== 1st hypothesis
+#pagebreak()
+= Hypothesis
 
-== 2nd hypothesis
+== Difference in mean salaries <diff_in_mean_hypo>
+- Null hypothesis $(H_o)$: There is no significant pay gap between men and women.
+- Alternative hypothesis $(H_alpha)$: There is a significant pay gap between men and women.
+- Alpha value $(alpha)$: 0.05
+== Controlled difference in mean salaries <controlled_diff_in_mean_hypo>
+- Null hypothesis $(H_o)$: After controlling for all contributing factors such as years of experience, job title, job level, etc., there is no significant pay gap between men and women. 
+- Alternative hypothesis $(H_alpha)$: After controlling for all contributing factors such as years of experience, job title, job level, etc., there is a significant pay gap between men and women.
+- Alpha value $(alpha)$: 0.05
+
+= Population of Interest 
+All professionals working in the tech field in Egypt. 
+
+= Dataset
+
+The dataset used in this study comes from the popular #link("https://api.egytech.fyi/")[Egyptian Tech Market Survey API] conducted in 2024 on the technology sector in Egypt.
+
+Below is a brief description of the relevant columns included in the dataset:
+- *Gender:* gender of the subject (Male, Female).
+- *Degree:* whether or not the subject has a bachelor degree (Yes, No)
+- *Title:* professional title of the subject. (Data Analyst, Scrum Master, etc.)
+- *Level:* professional level of the subject (Junior, Senior, Team lead, etc.)
+- *YearsOfExperience:* number of years the subject has been working in the field.
+- *Salary:* amount of money a subject is paid monthly in EGP currency.
+- *IsEgp:* currency of the subject's salary. (EGP, Another Currency [e.g. USD], Hybrid)
+- *ProgrammingLanguages:* programming languages that can be written by subject (Python, C++, etc.)
+- *BusinessMarket:* market scope of the subject's company (Regional, Global, Local)
+- *BusinessSize:* size of the subject's company (Start-up, Small and Medium, Large)
+- *WorkSetting:* working condition of the subject. (Office, Remote, etc.)
+- *CompanyLocation:* state/city where the subject's company operates.
+
+Number of samples used: *2649*.
+
+= Analysis
+
+*TODO MOHA* -> insert visualizations and descriptions from the python notebook 
+
+= Hypothesis Testing Steps
+
+== Difference in mean salaries
+
+We chose #link("https://en.wikipedia.org/wiki/Welch%27s_t-test")[*Welch’s Independent T-Test*] for this hypothesis.
+
+• Step 1: First, we formulated the null and alternative hypotheses (mentioned in #link(<diff_in_mean_hypo>)[section 4.1]).
+
+• Step 2: Then, we assumed our significance level ($alpha$) to be the standard 0.05.
+
+• Step 3: Next, we selected and cleaned our dataset to ensure no missing or erroneous values existed within the comparison groups.
+
+• Step 4: We used the `scipy.stats.ttest_ind()` function with `equal_var=False` to perform Welch’s t-test, which is ideal for comparing the means of two groups when their variances are unequal.
+
+• Step 5: Finally, we compared the p-value produced by the test with our alpha value to decide whether to reject or fail to reject the null hypothesis.
+
+== Controlled difference in mean salaries
+For this complicated hypothesis test, we used #link("https://en.wikipedia.org/wiki/Blinder%E2%80%93Oaxaca_decomposition")[*Blinder–Oaxaca decomposition*].
+
+• Step 1: First, we formulated the null and alternative hypotheses (mentioned in #link(<controlled_diff_in_mean_hypo>)[section 4.2]).
+
+• Step 2: We set the significance level ($alpha$) to 0.05, as is standard in most social science research.
+
+• Step 3: We selected and cleaned our dataset, and then processed the data to define the outcome variable and explanatory variables clearly.
+
+• Step 4: We ran separate regressions for the two groups and applied the Blinder–Oaxaca decomposition using the `statsmodels`. This allowed us to break down the mean outcome gap into an explained component and an unexplained component.
+
+• Step 5: We interpreted the decomposition output by examining the coefficients, p-values, and contribution of each variable. We assessed whether the overall gap, explained portion, or unexplained portion were statistically significant and derived conclusions about which factors contributed to inequality and how much remained unexplained.
+= Conclusion
+
+== Difference in mean salaries
+
+*TODO OMAR* -> Insert 
+
+== Controlled difference in mean salaries
+
+*TODO OMAR* -> Insert 
 
 == The Cost of Being a Woman
 
 We can define the cost of begin a woman as following
+
 $ "Cost" := "Expected salary based on objective factors" - "Current Salary" $
 
 To estimate the cost of being a woman, we need to find the objective factors that should dictate one's salary and use them to predict their salaries regardless of gender.
 
 The objective factors used in this study are:
+
 + Years of Experience
 + Title
 + Level 
@@ -41,4 +159,8 @@ The idea behind this is to have the explanatory variables all the columns in the
 
 Now, we use the current salary given in the dataset, and use this distribution to create a confidence interval.
 
-_Show CI image here_
+*TODO OMAR* -> _Show CI image here_
+
+= Any potential issues
+
+*TODO MOHA* -> discuss outliers and the scarcity of female records in the dataset
