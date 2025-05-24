@@ -51,11 +51,14 @@ The gender pay gap has been a global issue across labor markets. While considera
 
 To reason about this, we had to define 3 methods to attack this problem.
 
-*TODO OMAR* -> _Describe 1st hypothesis here_
++ Assessing the pay gap between genders
+The first hypotehsis testing aims to address the gender pay gap in Egypt's tech industry, by conducting *Welch's independant t-test* on salaries for both genders. This analysis aims to answer the question *"Is there a pay gap between men and women in Egypt's tech industry?"*
 
 *TODO OMAR* -> _Describe 2st hypothesis here_
++ Hypothesis 2nd
 
-Third, we define *The Cost of Being a Woman* as the amount of disparity between salaries that a women loses (or potentially earns) compared to men per month. It's the amount a man with her skills, title, and years of experience would be expected to earn. The analysis aims to provide a confidence interval with $alpha=95%$ to find this cost.
++ Estimating *The Cost of Being a Woman*
+we define _The Cost of Being a Woman_ as the amount of disparity between salaries that a women loses (or potentially earns) compared to men per month. It's the amount a man with her skills, title, and years of experience would be expected to earn. The analysis aims to provide a confidence interval with $alpha=95%$ to find this cost.
 
 = Research Questions
 + Is there a statistically significant difference in mean salaries between genders?
@@ -153,8 +156,16 @@ Now, we use the current salary given in the dataset, and use this distribution t
 
 == Difference in mean salaries
 
-*TODO OMAR* -> 
 
+The result of the salary comparison by experience bracket and gender:
+#image("salaries_differences_across_years_of_expereinces.png")
+
+Key observations:
+
++ The average salary for both genders increases with experience
++ In the first two years, the average salary is around 18000 for both genders
++ In the first 10 years, men appear to have higher average salaries, small at the first two years, and increases as time goes on
++ After the first 10 years, women have far higher salaries them men in the tech industry. After 15+ years, women have 12000 EGP more than men on average.
 
 == Controlled difference in mean salaries
 
