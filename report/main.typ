@@ -58,7 +58,7 @@ To address this, we define three methods of investigation:
 
 + *Assessing the gender pay gap after controlling for all contributing factors*
 
-  *TODO OMAR* -> Describe 2nd Hypothesis
+  This second analysis aims to control for years of experience between the two genders, and additionally, check for any pay gap per bracket. This analysis will use *Blinder–Oaxaca decomposition* to determine the pay gap per each experience bracket.
 
 + *Estimating The Cost of Being a Woman* 
 
@@ -139,7 +139,7 @@ We trained a regression model on male data using all variables except gender, th
 
 = Conclusion
 == Difference in mean salaries
-*P-value:* 0.2668 — well above the 0.05 threshold. We fail to reject the null hypothesis. No significant evidence of a gender-based pay gap exists.
+*P-value:* 0.2668 — It's above the 0.05 threshold. We fail to reject the null hypothesis. No significant evidence of a gender-based pay gap exists.
 
 == Controlled difference in mean salaries
 
