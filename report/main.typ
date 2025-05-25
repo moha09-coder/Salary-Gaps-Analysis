@@ -150,7 +150,7 @@ These outliers, particularly in the Salary variable, can distort statistical mea
 == IQR Gender Visualizations
 To have a better understanding of the difference in Salaries and Years of Experience between males and females, we represent them using side-by-side histograms.
 
-#figure(image("iqr-salary-gender.png"), caption: [A histogram of the IQR of the salary per gender. It is observed that men earn higher salaries .])
+#figure(image("iqr-salary-gender.png"), caption: [A histogram of the IQR of the salary per gender. It is observed that relatively more men earn higher salaries than women.])
 
 #figure(image("iqr-yoe-gender.png"), caption: [A histogram of the IQR of the years of experience per gender, women seem to be evenly spread across all years of experience, while men seem to be present in the 1-2 years of experience bracket more than the rest.])
 
