@@ -66,7 +66,7 @@ To address this, we define three methods of investigation:
 
 = Research Questions
 + Is there a statistically significant difference in mean salaries between genders?
-+ After controlling for years of experience and other contributing factors, does the pay gap persist?
++ After controlling for years of experience and other contributing factors, does the pay gap persist/vanish?
 + What is the cost of being a woman—how much does a woman gain or lose per month compared to an equally qualified man?
 
 = Hypothesis
@@ -103,7 +103,96 @@ The dataset used comes from the #link("https://api.egytech.fyi/")[Egyptian Tech 
 Sample size: *2649*
 
 = Analysis
-*TODO MOHA* -> Insert visualizations and summaries from Python notebook
+
+For the rest of our analysis, we are going to split the data into two parts. A part where the salary is in EGP, and another where the salary is in any other currency.
+
+_However, we are going to be mainly focusing on *the salaries in EGP* during this study._
+
+== Five-number summary
+
+Firstly, we want to do a Five-number summary for our quantitative variables in order to work out the *IQR*, and do our *outlier analysis*.
+
+#align(center, (  
+table(
+  columns: 3,
+  [], [Salary (EGP)], [Years of Experience],
+  [Minimum], [12.00], [0.0],
+  [Q1], [15,000.00], [1.00],
+  [Median (Q2)], [24,000.00], [2.00],
+  [Q3], [40,000.00], [4.00],
+  [Maximum], [330,000.00], [31.00]
+)
+))
+
+From that summary, we can see that the middle 50% of the salaries lies *between 15,000.00 EGP and 40,000.00 EGP*, and the middle 50% of the years of experience lies *between 1 and 4 years*.
+
+#figure(image("salary-box-plot.png", width: 52%), caption: [A box plot of Salary in EGP. It shows a slight right-skewness, in addition to a big number of outliers.])
+
+
+#figure(image("yoe-box-plot.png", width: 52%), caption: [A box plot of Years of Experience. It shows a slight right-skewness as well, and a significantly smaller number of outliers.])
+
+== Outlier Analysis
+
+From the box plots and the five-number summary, it is evident that there are several outliers in both the Salary and Years of Experience distributions. However, the severity and frequency of these outliers differ:
+
+- *Salary (EGP)* shows a significant number of outliers on the higher end, confirming the right-skewness observed in the box plot. These are likely due to a small number of professionals earning exceptionally high salaries, possibly in senior or specialized roles. To ensure our analysis remains representative and interpretable, salaries above the 99th percentile were removed.
+
+- *Years of Experience*, on the other hand, exhibits far fewer outliers. The majority of participants fall within a narrow range (1–4 years), with a few outliers representing professionals with notably long careers (up to 31 years).
+
+These outliers, particularly in the Salary variable, can distort statistical measures like the mean and standard deviation. By identifying and handling them appropriately, the analysis focuses on the central trends that are more reflective of the general population.
+
+== IQR Visualizations
+
+#figure(image("iqr-salary.png"), caption: [A histogram of the IQR of the salary column reveals a multi-modal representation, which reflects the existence of cofactor variables like years of experience, job level, etc.])
+
+#figure(image("iqr-yoe.png"), caption: [A histogram of the IQR of the years of experience column reveals a multi-modal representation as well.])
+
+== IQR Gender Visualizations
+To have a better understanding of the difference in Salaries and Years of Experience between males and females, we represent them using side-by-side histograms.
+
+#figure(image("iqr-salary-gender.png"), caption: [A histogram of the IQR of the salary per gender. It is observed that men earn higher salaries .])
+
+#figure(image("iqr-yoe-gender.png"), caption: [A histogram of the IQR of the years of experience per gender, women seem to be evenly spread across all years of experience, while men seem to be present in the 1-2 years of experience bracket more than the rest.])
+
+#pagebreak()
+
+== Gender Distribution
+
+An important aspect of our study is *the number of females and males present in our dataset*, knowing that count will help us determine whether this sample is representative of the population or not. 
+
+#figure(image("gender_distribution.png"), caption: [A histogram of the count of Males and Females whose Salaries are in EGP (The subset of the market we are studying). It is noticed that the *count of Males is almost 4 times more than that of Females*.])
+
+The ratio between working men and women in the tech industry is reflected in the diagram. as according to this #link("https://www.statista.com/statistics/1446245/worldwide-developer-gender-distribution/")[report],* women represent 20% of the tech and engineering industry*.
+
+== Correlation between Salary and Years of Experience
+
+To find the correlation between two quantitative variables, salary and years of experience, we are going to use *Pearson's Correlation*, but first we need to check if the two variables observe a linear relationship or not.
+
+#figure(image("scatter-yoe-salary.png"), caption: [A scatter plot of salary and years of experience. It is noticed that there is a slight positive linear relationship between them.])
+
+Then, calculating the *Pearson correlation coefficient*  yields: $ r = 0.55 $ Which means there is *moderate positive linear correlation* between Salary and Years of Experience.
+
+#pagebreak()
+
+== Salaries per Job Level
+
+Next, we want to check the Salaries per each Job Level in our dataset.
+
+#figure(image("salary_by_level.png", width: 85%), caption: [A series of box plots for each Job Title and the average Salary associated with it. The data seems to be following a normal trend where Management Jobs have the highest salaries, while Interns are paid the lowest.])
+
+== Salaries per Job Level and Gender
+
+Now let's check how these box plots look when taking gender into consideration.
+
+#figure(image("salary_by_level_gender.png", width: 85%), caption: [Box plots for each Gender's Job Title and the average Salary associated with it. It is observed that in the majority of Job Levels, men earn a more rewarding Salary than women.])
+
+== Top 10 Job Titles with Highest Average Salaries by Gender
+
+Lastly, we want to check what are the top 10 most paying jobs in the dataset, and how different is the average pay of these jobs per gender.
+
+#figure(image("top_jobs.png"), caption: [A series of bar plots for top 10 most paying jobs in the dataset, and the average Salary associated with them for each gender.])
+
+Although men seem to have a bigger average salary in the top paying job across the dataset (Engineering Manager), women secure that spot in the second most paying job which is Systems Architect, as well as a few other jobs like Embedded Systems Engineer, Scrum Master, and DevOps in which women seem to have the bigger average salary.
 
 = Hypothesis Testing Steps
 == Difference in mean salaries
@@ -137,9 +226,12 @@ $"Cost" := "Expected Salary based on objective factors" - "Actual Salary"$
 
 We trained a regression model on male data using all variables except gender, then applied it to female employees to estimate expected salaries. This allowed us to construct a 95% confidence interval around the cost of being a woman.
 
-= Conclusion
+= Conclusions
 == Difference in mean salaries
 *P-value:* 0.2668 — It's above the 0.05 threshold. We fail to reject the null hypothesis. No significant evidence of a gender-based pay gap exists.
+
+To further verify that conclusion, we run a *Practical Significance* test using *Cohen's d effect size*. The results were: $ d = 0.0592 $
+This effect size means that the gender pay gap has a negligible practical significance.
 
 == Controlled difference in mean salaries
 
@@ -150,6 +242,9 @@ We trained a regression model on male data using all variables except gender, th
 - Men earn slightly more in the first 10 years
 - After 10 years, women’s average salaries exceed those of men
 
+#image("oaxaca-blinder.png")
+To further investigate the sources of this weird behavior, we performed a Oaxaca-Blinder decomposition. However, due to the relatively small sample size, the decomposition yielded unstable and inconclusive estimates regarding each portion. These results should not be interpreted as strong evidence but rather as exploratory insights that warrant further investigation with larger datasets.
+
 == The Cost of Being a Woman
 
 #image("cost_of_being_a_woman_CI.png")
@@ -157,4 +252,7 @@ We trained a regression model on male data using all variables except gender, th
 The 95% confidence interval ranges from *-1950.41 to 1590.81 EGP*. Since zero lies within this interval, it suggests that the "cost of being a woman" may, statistically, be zero.
 
 = Any Potential Issues
-*TODO MOHA* -> Discuss outliers and scarcity of female records in the dataset
+
+The dataset included a big amount of very extreme outliers that significantly altered our results and distorted our visualizations. We dealt with that by trimming the largest 1% Salaries, in other words, we used the 99th percentile of the dataset in our entire analysis. While that didn't ultimately get rid of all outliers, but it helped reduce their effect a bit.
+
+Another issue we faced, was that scarcity of female records in the dataset. This limited us from reaching a clear consensus regarding the *Blinder–Oaxaca decomposition*, as it required more female records to yield accurate results. However, we backed that off with a regression analysis that supported the results of the *Blinder–Oaxaca decomposition* test.
