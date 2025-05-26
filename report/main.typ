@@ -249,7 +249,7 @@ To further investigate the sources of this weird behavior, we performed a Oaxaca
 
 #image("cost_of_being_a_woman_CI.png")
 
-The 95% confidence interval ranges from *-1950.41 to 1590.81 EGP*. Since zero lies within this interval, it suggests that the "cost of being a woman" may, statistically, be zero.
+The 95% confidence interval ranges from *-1984.29 to 1692.21 EGP*. Since zero lies within this interval, it suggests that the "cost of being a woman" may, statistically, be zero.
 
 = Any Potential Issues
 
